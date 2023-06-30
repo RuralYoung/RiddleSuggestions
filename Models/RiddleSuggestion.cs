@@ -7,5 +7,7 @@
         public string Answer { get; set; }
         public string? Hint { get; set; }
         public int Rating { get; set; }
+
+        public IEnumerable<RiddleSuggestion>? RiddleSuggestions { get; set; }
     }
 }
