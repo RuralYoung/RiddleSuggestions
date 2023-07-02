@@ -17,23 +17,12 @@ namespace RiddleSuggestions.Migrations
                     Question = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Answer = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Hint = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Rating = table.Column<int>(type: "int", nullable: false),
-                    RiddleSuggestionRiddleID = table.Column<int>(type: "int", nullable: true)
+                    Rating = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_RiddleSuggestions", x => x.RiddleID);
-                    table.ForeignKey(
-                        name: "FK_RiddleSuggestions_RiddleSuggestions_RiddleSuggestionRiddleID",
-                        column: x => x.RiddleSuggestionRiddleID,
-                        principalTable: "RiddleSuggestions",
-                        principalColumn: "RiddleID");
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_RiddleSuggestions_RiddleSuggestionRiddleID",
-                table: "RiddleSuggestions",
-                column: "RiddleSuggestionRiddleID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
