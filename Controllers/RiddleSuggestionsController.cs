@@ -9,7 +9,7 @@ namespace RiddleSuggestions.Controllers
     {
         private RiddleSuggestionsDbContext _context;
 
-        public RiddleSuggestionsController(RiddleSuggestionsDbContext context)
+        public RiddleSuggestionsController( RiddleSuggestionsDbContext context )
         {
             _context = context;
         }
@@ -21,9 +21,30 @@ namespace RiddleSuggestions.Controllers
         }
 
         [HttpGet("{id}")]
-        public RiddleSuggestion? GetRiddleSuggestion([FromServices] ILogger<RiddleSuggestionsController> logger, int id) {
+        public RiddleSuggestion? GetRiddleSuggestion( [FromServices] ILogger<RiddleSuggestionsController> logger, int id ) {
             logger.LogDebug("GetProduct Action Invoked");
             return _context.RiddleSuggestions.Where( r => r.RiddleID == id ).FirstOrDefault();
+        }
+
+        [HttpPost]
+        public void postRiddleSuggestion( [FromBody] RiddleSuggestion riddleSuggestion )
+        {
+            _context.RiddleSuggestions.Add(riddleSuggestion);
+            _context.SaveChanges();
+        }
+
+        [HttpPut]
+        public void PutRiddleSuggestion( [FromBody] RiddleSuggestion riddleSuggestion )
+        {
+            _context.RiddleSuggestions.Update(riddleSuggestion);
+            _context.SaveChanges();
+        }
+
+        [HttpDelete("{id}")]
+        public void DeleteRiddleSuggestion(int id)
+        {
+            _context.RiddleSuggestions.Remove(new RiddleSuggestion() { RiddleID = id });
+            _context.SaveChanges();
         }
     }
 }

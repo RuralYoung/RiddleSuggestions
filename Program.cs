@@ -13,6 +13,8 @@ builder.Services.AddDbContext<RiddleSuggestionsDbContext>(opts =>
 
 builder.Services.AddControllers();
 
+builder.Services.AddCors();
+
 var app = builder.Build();
 
 app.MapControllers();
