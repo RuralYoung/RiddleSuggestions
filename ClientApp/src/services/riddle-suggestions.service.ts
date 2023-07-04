@@ -17,13 +17,18 @@ export class RiddleSuggestionsService {
     return this.http.get<RiddleSuggestion[]>(this.riddlesSuggestionsUrl);
   }
 
+  // GET: Single Riddle Suggestion from server
+  getRiddleSuggestion( id: number ): Observable<RiddleSuggestion> {
+    return this.http.get<RiddleSuggestion>( `${this.riddlesSuggestionsUrl}/${id}` );
+  }
+
   // POST: Add a Riddle Suggestion
-  postRiddleSuggestion(riddleSuggestion: RiddleSuggestion): Observable<RiddleSuggestion> {
+  postRiddleSuggestion( riddleSuggestion: RiddleSuggestion ): Observable<RiddleSuggestion> {
     return this.http.post<RiddleSuggestion>( this.riddlesSuggestionsUrl, riddleSuggestion );
   } 
   
   // PUT: Update a Riddle Suggestion
-  putRiddleSuggestion(riddleSuggestion: RiddleSuggestion): Observable<RiddleSuggestion> {
+  putRiddleSuggestion( riddleSuggestion: RiddleSuggestion ): Observable<RiddleSuggestion> {
     return this.http.put<RiddleSuggestion>( `${this.riddlesSuggestionsUrl}/${riddleSuggestion.riddleId}`, riddleSuggestion );
   }
 
