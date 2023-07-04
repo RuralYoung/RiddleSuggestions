@@ -1,0 +1,47 @@
+import { Injectable } from "@angular/core";
+
+import { RiddleSuggestion } from "./RiddleSuggestion.Model";
+import { RiddleSuggestionsService } from "src/services/riddle-suggestions.service";
+
+@Injectable()
+export class Repository {
+    protected riddleSuggestions: RiddleSuggestion[] = [];
+  
+    constructor( private _riddleSuggestionsService: RiddleSuggestionsService ) {}
+
+    ngOnInit(): void {
+        this.getRiddleSuggestions();
+    }
+
+    getRiddleSuggestions(): void {
+        this._riddleSuggestionsService.getRiddleSuggestions()
+            .subscribe( serverRiddleSuggestions => this.riddleSuggestions = serverRiddleSuggestions );
+    }
+
+    getRiddleSuggestion(id: number): RiddleSuggestion | undefined {
+        return this.riddleSuggestions.find( ( i: RiddleSuggestion ) =>  i.riddleId == id )
+    }
+
+    saveRiddleSuggestion(riddleSuggestion: RiddleSuggestion): void {
+        if (riddleSuggestion.riddleId == null ) {
+        this._riddleSuggestionsService.postRiddleSuggestion(riddleSuggestion)
+            .subscribe( serverRiddleSuggestion => this.riddleSuggestions.push(serverRiddleSuggestion) );
+        }
+        else {
+        this._riddleSuggestionsService.putRiddleSuggestion(riddleSuggestion)
+            .subscribe( serverRiddleSuggestion => {
+            let i = this.riddleSuggestions.findIndex( ( j: RiddleSuggestion ) => j.riddleId == serverRiddleSuggestion.riddleId );
+            this.riddleSuggestions.splice( i, 1, serverRiddleSuggestion);
+            } );
+        }
+    }
+
+    deleteRiddleSuggestion(id: number): void {
+        this._riddleSuggestionsService.deleteRiddleSuggestion(id)
+        .subscribe( () => {
+            let i = this.riddleSuggestions.findIndex( ( j: RiddleSuggestion ) => j.riddleId == id );
+            if ( -1 < i )
+            this.riddleSuggestions.splice( i, 1 );
+        } );
+    }
+}

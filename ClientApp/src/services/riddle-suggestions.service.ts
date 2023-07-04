@@ -17,10 +17,11 @@ export class RiddleSuggestionsService {
     return this.http.get<RiddleSuggestion[]>(this.riddlesSuggestionsUrl);
   }
 
-  // GET: Single Riddle Suggestion from server
+  // May not need this.
+  /*// GET: Single Riddle Suggestion from server
   getRiddleSuggestion( id: number ): Observable<RiddleSuggestion> {
     return this.http.get<RiddleSuggestion>( `${this.riddlesSuggestionsUrl}/${id}` );
-  }
+  } */
 
   // POST: Add a Riddle Suggestion
   postRiddleSuggestion( riddleSuggestion: RiddleSuggestion ): Observable<RiddleSuggestion> {
