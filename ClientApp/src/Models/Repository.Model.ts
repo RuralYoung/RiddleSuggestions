@@ -5,43 +5,44 @@ import { RiddleSuggestionsService } from "src/services/riddle-suggestions.servic
 
 @Injectable()
 export class Repository {
-    protected riddleSuggestions: RiddleSuggestion[] = [];
+    private _riddleSuggestions: RiddleSuggestion[] = [];
   
-    constructor( private _riddleSuggestionsService: RiddleSuggestionsService ) {}
-
-    ngOnInit(): void {
-        this.getRiddleSuggestions();
+    constructor( private _riddleSuggestionsService: RiddleSuggestionsService ) {
+        console.log("Retreiving from server");
+        this._riddleSuggestionsService.getRiddleSuggestions()
+            .subscribe( serverRiddleSuggestions => this._riddleSuggestions = serverRiddleSuggestions,
+                         () => console.log("ERROR"),
+                         () => console.log(this._riddleSuggestions.length));
     }
 
-    getRiddleSuggestions(): void {
-        this._riddleSuggestionsService.getRiddleSuggestions()
-            .subscribe( serverRiddleSuggestions => this.riddleSuggestions = serverRiddleSuggestions );
+    getRiddleSuggestions(): RiddleSuggestion[] {
+        return this._riddleSuggestions;
     }
 
     getRiddleSuggestion(id: number): RiddleSuggestion | undefined {
-        return this.riddleSuggestions.find( ( i: RiddleSuggestion ) =>  i.riddleId == id )
+        return this._riddleSuggestions.find( ( i: RiddleSuggestion ) =>  i.riddleId == id );
     }
 
-    saveRiddleSuggestion(riddleSuggestion: RiddleSuggestion): void {
-        if (riddleSuggestion.riddleId == null ) {
+    createRiddleSuggestion( riddleSuggestion: RiddleSuggestion ): void {
         this._riddleSuggestionsService.postRiddleSuggestion(riddleSuggestion)
-            .subscribe( serverRiddleSuggestion => this.riddleSuggestions.push(serverRiddleSuggestion) );
-        }
-        else {
+            .subscribe( serverRiddleSuggestion => this._riddleSuggestions.push(serverRiddleSuggestion) );
+    }
+
+    updateRiddleSuggestion( riddleSuggestion: RiddleSuggestion ): void {
         this._riddleSuggestionsService.putRiddleSuggestion(riddleSuggestion)
             .subscribe( serverRiddleSuggestion => {
-            let i = this.riddleSuggestions.findIndex( ( j: RiddleSuggestion ) => j.riddleId == serverRiddleSuggestion.riddleId );
-            this.riddleSuggestions.splice( i, 1, serverRiddleSuggestion);
+                let i = this._riddleSuggestions.findIndex( ( j: RiddleSuggestion ) => j.riddleId == serverRiddleSuggestion.riddleId );
+                this._riddleSuggestions.splice( i, 1, serverRiddleSuggestion);
             } );
-        }
+
     }
 
     deleteRiddleSuggestion(id: number): void {
         this._riddleSuggestionsService.deleteRiddleSuggestion(id)
         .subscribe( () => {
-            let i = this.riddleSuggestions.findIndex( ( j: RiddleSuggestion ) => j.riddleId == id );
+            let i = this._riddleSuggestions.findIndex( ( j: RiddleSuggestion ) => j.riddleId == id );
             if ( -1 < i )
-            this.riddleSuggestions.splice( i, 1 );
+                this._riddleSuggestions.splice( i, 1 );
         } );
     }
 }
