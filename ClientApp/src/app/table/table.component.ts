@@ -19,15 +19,15 @@ export class TableComponent {
     return this._repository.getRiddleSuggestions();
   }
 
-  createRiddleSuggestions( riddleSuggestion: RiddleSuggestion ) {
+  createRiddleSuggestion( riddleSuggestion: RiddleSuggestion ) {
     this._repository.createRiddleSuggestion( riddleSuggestion );
   }
 
-  editRiddleSuggestions( riddleSuggestion: RiddleSuggestion ) {
+  editRiddleSuggestion( riddleSuggestion: RiddleSuggestion ) {
     this._repository.updateRiddleSuggestion( riddleSuggestion );
   }
 
-  deleteRiddleSuggestions( id: number ) {
+  deleteRiddleSuggestion( id: number ) {
     if (id != undefined )
       this._repository.deleteRiddleSuggestion( id );
   }
