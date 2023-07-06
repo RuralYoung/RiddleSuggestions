@@ -30,7 +30,7 @@ export class RiddleSuggestionsService {
   
   // PUT: Update a Riddle Suggestion
   putRiddleSuggestion( riddleSuggestion: RiddleSuggestion ): Observable<RiddleSuggestion> {
-    return this.http.put<RiddleSuggestion>( `${this.riddlesSuggestionsUrl}/${riddleSuggestion.riddleId}`, riddleSuggestion );
+    return this.http.put<RiddleSuggestion>( `${this.riddlesSuggestionsUrl}/${riddleSuggestion.riddleID}`, riddleSuggestion );
   }
 
   // DELETE: Delete a Riddle Suggestion

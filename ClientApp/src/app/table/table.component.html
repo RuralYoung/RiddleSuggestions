@@ -1,0 +1,16 @@
+<table>
+    <thead>
+        <tr>
+            <th>RiddleID</th><th>Question</th><th>Answer</th><th>Hint</th><th>Rating</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let riddleSuggestion of getRiddleSuggestions()">
+            <td>{{riddleSuggestion.riddleID}}</td>
+            <td>{{riddleSuggestion.question}}</td>
+            <td>{{riddleSuggestion.answer}}</td>
+            <td>{{riddleSuggestion.hint}}</td>
+            <td>{{riddleSuggestion.rating}}</td>
+        </tr>
+    </tbody>
+</table>

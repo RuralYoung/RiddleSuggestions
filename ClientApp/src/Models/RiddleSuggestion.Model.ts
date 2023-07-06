@@ -1,6 +1,6 @@
 export class RiddleSuggestion {
     constructor(
-        public riddleId?: number,
+        public riddleID?: number,
         public question?: string,
         public answer?: string,
         public hint?: string,

@@ -11,8 +11,8 @@ export class Repository {
         console.log("Retreiving from server");
         this._riddleSuggestionsService.getRiddleSuggestions()
             .subscribe( serverRiddleSuggestions => this._riddleSuggestions = serverRiddleSuggestions,
-                         () => console.log("ERROR"),
-                         () => console.log(this._riddleSuggestions.length));
+                         () => console.log( "ERROR" ),
+                         () => console.log( "Succesfully got riddleSuggestions" ));
     }
 
     getRiddleSuggestions(): RiddleSuggestion[] {
@@ -20,7 +20,7 @@ export class Repository {
     }
 
     getRiddleSuggestion(id: number): RiddleSuggestion | undefined {
-        return this._riddleSuggestions.find( ( i: RiddleSuggestion ) =>  i.riddleId == id );
+        return this._riddleSuggestions.find( ( i: RiddleSuggestion ) =>  i.riddleID == id );
     }
 
     createRiddleSuggestion( riddleSuggestion: RiddleSuggestion ): void {
@@ -31,7 +31,7 @@ export class Repository {
     updateRiddleSuggestion( riddleSuggestion: RiddleSuggestion ): void {
         this._riddleSuggestionsService.putRiddleSuggestion(riddleSuggestion)
             .subscribe( serverRiddleSuggestion => {
-                let i = this._riddleSuggestions.findIndex( ( j: RiddleSuggestion ) => j.riddleId == serverRiddleSuggestion.riddleId );
+                let i = this._riddleSuggestions.findIndex( ( j: RiddleSuggestion ) => j.riddleID == serverRiddleSuggestion.riddleID );
                 this._riddleSuggestions.splice( i, 1, serverRiddleSuggestion);
             } );
 
@@ -40,7 +40,7 @@ export class Repository {
     deleteRiddleSuggestion(id: number): void {
         this._riddleSuggestionsService.deleteRiddleSuggestion(id)
         .subscribe( () => {
-            let i = this._riddleSuggestions.findIndex( ( j: RiddleSuggestion ) => j.riddleId == id );
+            let i = this._riddleSuggestions.findIndex( ( j: RiddleSuggestion ) => j.riddleID == id );
             if ( -1 < i )
                 this._riddleSuggestions.splice( i, 1 );
         } );
